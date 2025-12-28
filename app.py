@@ -1,45 +1,38 @@
-import os 
 import tensorflow as tf
-from tensorflow.keras.models import load_model
 import streamlit as st
 import numpy as np
+from tensorflow.keras.models import load_model
+from PIL import Image
 
+st.set_page_config(page_title="Flower Classification", layout="centered")
 
-model = load_model('Flower_Recog_model.h5')
+@st.cache_resource
+def load_cnn_model():
+    return load_model("Flower_Recog_model.h5")
 
-
-
-st.header('Flower Classification CNN model')
+model = load_cnn_model()
 
 flower_names = ['daisy', 'dandelion', 'rose', 'sunflower', 'tulip']
 
-def classify_images(image_path):
-    input_image = tf.keras.utils.load_img(image_path, target_size=(180, 180))
-    input_image_array = tf.keras.utils.img_to_array(input_image)
-    input_image_exp_dim = tf.expand_dims(input_image_array, 0)
+st.title("🌸 Flower Classification CNN Model")
 
-    predictions = model.predict(input_image_exp_dim)
-    result = tf.nn.softmax(predictions[0])
-
-    outcome = (
-        'The image belongs to '
-        + flower_names[np.argmax(result)]
-        + ' with a score of '
-        + str(float(np.max(result) * 100))
-    )
-    return outcome
-
-uploaded_file = st.file_uploader('Upload an image', type=["jpg", "png", "jpeg"])
+uploaded_file = st.file_uploader(
+    "Upload a flower image",
+    type=["jpg", "jpeg", "png"]
+)
 
 if uploaded_file is not None:
-    os.makedirs("upload", exist_ok=True)
+    image = Image.open(uploaded_file).convert("RGB")
+    st.image(image, caption="Uploaded Image", use_column_width=True)
 
-    image_path = os.path.join("upload", uploaded_file.name)
+    img = image.resize((180, 180))
+    img_array = tf.keras.utils.img_to_array(img)
+    img_array = tf.expand_dims(img_array, 0)
 
-    with open(image_path, "wb") as f:
-        f.write(uploaded_file.getbuffer())
+    predictions = model.predict(img_array)
+    score = tf.nn.softmax(predictions[0])
 
-    st.image(uploaded_file, width=200)
-
-    # ✅ ONLY THIS LINE IS IMPORTANT
-    st.markdown(classify_images(image_path))
+    st.success(
+        f"This image is **{flower_names[np.argmax(score)]}** "
+        f"with **{100 * np.max(score):.2f}% confidence**"
+    )
