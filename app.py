@@ -1,6 +1,6 @@
-import tensorflow as tf
 import streamlit as st
 import numpy as np
+import tensorflow as tf
 from tensorflow.keras.models import load_model
 from PIL import Image
 
@@ -8,7 +8,7 @@ st.set_page_config(page_title="Flower Classification", layout="centered")
 
 @st.cache_resource
 def load_cnn_model():
-    return load_model("Flower_Recog_model.h5")
+    return load_model("model.h5")
 
 model = load_cnn_model()
 
