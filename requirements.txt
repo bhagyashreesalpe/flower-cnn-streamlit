@@ -1,0 +1,8 @@
+streamlit==1.25.0
+tensorflow==2.12.0
+numpy
+pillow
+scikit-learn
+opencv-python-headless
+protobuf==3.20.3
+typing-extensions==4.6.3
