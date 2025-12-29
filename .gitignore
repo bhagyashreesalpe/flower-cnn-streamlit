@@ -1,0 +1,10 @@
+.ipynb_checkpoints/
+*.ipynb
+samples/
+images/
+upload/
+__pycache__/
+.env
+venv/
+.venv/
+*.pyc/

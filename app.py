@@ -27,7 +27,7 @@ if uploaded_file is not None:
 
     img = image.resize((180, 180))
     img_array = tf.keras.utils.img_to_array(img)
-    img_array = tf.expand_dims(img_array, 0)
+    img_array = tf.expand_dims(img_array, 0) / 255.0
 
     predictions = model.predict(img_array)
     score = tf.nn.softmax(predictions[0])
