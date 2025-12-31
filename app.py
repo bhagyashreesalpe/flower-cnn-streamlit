@@ -15,7 +15,8 @@ model = load_cnn_model()
 
 flower_names = ['daisy', 'dandelion', 'rose', 'sunflower', 'tulip']
 
-st.title("🌸 Flower Classification CNN Model")
+st.title("🌷 Flower Classification CNN Model")
+
 
 uploaded_file = st.file_uploader(
     "Upload a flower image",
