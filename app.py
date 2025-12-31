@@ -1,7 +1,8 @@
 import streamlit as st
 import numpy as np
+from tensorflow import keras
 import tensorflow as tf
-from tensorflow.keras.models import load_model
+load_model = tf.keras.models.load_model
 from PIL import Image
 
 st.set_page_config(page_title="Flower Classification", layout="centered")
