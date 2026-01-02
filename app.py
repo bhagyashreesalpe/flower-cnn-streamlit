@@ -1,23 +1,21 @@
 import streamlit as st
 import numpy as np
-from tensorflow import keras
 import tensorflow as tf
-load_model = tf.keras.models.load_model
 from PIL import Image
 
 st.set_page_config(page_title="Flower Classification", layout="centered")
 
-@st.cache_resource
+st.title("🌷 Flower Classification CNN Model")
+st.markdown("### 👇 Upload an image to get prediction")
+
+@st.cache_resource(show_spinner=False)
 def load_cnn_model():
-    return load_model("model.keras")
+    return tf.keras.models.load_model("model.keras")
 
-
-model = load_cnn_model()
+with st.spinner("🔄 Loading CNN model, please wait..."):
+    model = load_cnn_model()
 
 flower_names = ['daisy', 'dandelion', 'rose', 'sunflower', 'tulip']
-
-st.title("🌷 Flower Classification CNN Model")
-
 
 uploaded_file = st.file_uploader(
     "Upload a flower image",
