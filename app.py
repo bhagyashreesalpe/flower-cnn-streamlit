@@ -9,7 +9,8 @@ st.set_page_config(page_title="Flower Classification", layout="centered")
 
 @st.cache_resource
 def load_cnn_model():
-    return load_model("model.h5")
+    return load_model("model.keras")
+
 
 model = load_cnn_model()
 
